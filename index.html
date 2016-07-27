@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>jip by jiptool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">jip</h1>
+      <h2 class="project-tagline"></h2>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="jip" class="anchor" href="#jip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>jip</h1>
+
+<p>Jip is the jython equivalent of pip to python. It will resolve
+dependencies and download jars for your jython environment.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>jip itself is distributed according to <strong>MIT License</strong> .</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<p>jip is recommended to run within virtualenv, which is a best practice
+for python/jython developers to created a standalone, portable
+environment. From jip 0.7, you can use jip.embed in the global installation.</p>
+
+<h3>
+<a id="install-jip-within-virtualenv" class="anchor" href="#install-jip-within-virtualenv" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install jip within virtualenv</h3>
+
+<p>Create virtualenv with jython:</p>
+
+<pre><code>virtualenv -p /usr/local/bin/jython jython-env
+</code></pre>
+
+<p>Activate the shell environment:</p>
+
+<pre><code>cd jython-dev
+source bin/activate
+</code></pre>
+
+<p>Download and install jip with pip:</p>
+
+<pre><code>pip install jip
+</code></pre>
+
+<h3>
+<a id="install-jip-for-global-jython-since-07" class="anchor" href="#install-jip-for-global-jython-since-07" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install jip for global jython (since 0.7)</h3>
+
+<p>Download jip <a href="http://pypi.python.org/pypi/jip">from pypi page</a>. 
+Then normally install it with setup.py</p>
+
+<pre><code>jython setup.py install
+</code></pre>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="install-a-java-package" class="anchor" href="#install-a-java-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install a Java package</h3>
+
+<p>jip will resolve dependencies and download jars from maven
+repositories. You can install a Java package just like what you do
+python with pip:</p>
+
+<pre><code>jip install &lt;groupId&gt;:&lt;artifactId&gt;:&lt;version&gt;
+</code></pre>
+
+<p>Take spring as example:</p>
+
+<pre><code>jip install org.springframework:spring-core:3.0.5.RELEASE
+</code></pre>
+
+<h3>
+<a id="resolve-dependencies-defined-in-a-pom" class="anchor" href="#resolve-dependencies-defined-in-a-pom" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resolve dependencies defined in a pom</h3>
+
+<p>jip allows you to define dependencies in a maven pom file, which is
+more maintainable than typing install command one by one:</p>
+
+<pre><code>jip resolve pom.xml
+</code></pre>
+
+<h3>
+<a id="resolve-dependencies-for-an-artifact" class="anchor" href="#resolve-dependencies-for-an-artifact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resolve dependencies for an artifact</h3>
+
+<p>With jip, you can resolve and download all dependencies of an
+artifact, without grab the artifact itself (whenever the artifact
+is downloadable, for example, just a plain pom). This is especially
+useful when you are about to setup an environment for an artifact.
+Also, java dependencies for a jython package is defined in this
+way.</p>
+
+<pre><code>jip deps info.sunng.gefr:gefr:0.2-SNAPSHOT
+</code></pre>
+
+<h3>
+<a id="update-snapshot-artifact" class="anchor" href="#update-snapshot-artifact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Update snapshot artifact</h3>
+
+<p>You can use update command to find and download a new deployed
+snapshot:</p>
+
+<pre><code>jip update info.sunng.bason:bason-annotation:0.1-SNAPSHOT
+</code></pre>
+
+<h3>
+<a id="run-jython-with-installed-java-packages-in-path" class="anchor" href="#run-jython-with-installed-java-packages-in-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run jython with installed java packages in path</h3>
+
+<p>Another script <code>jython-all</code> is shipped with jip. To run jython
+with Java packages included in path, just use <code>jython-all</code>
+instead of <code>jython</code></p>
+
+<h3>
+<a id="list" class="anchor" href="#list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List</h3>
+
+<p>Use <code>jip list</code> to see artifacts you just installed</p>
+
+<h3>
+<a id="remove-a-package" class="anchor" href="#remove-a-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Remove a package</h3>
+
+<p>You are suggested to use <code>jip remove</code> to remove an artifact. This
+will keep library index consistent with file system.</p>
+
+<pre><code>jip remove org.springframework:spring-core:3.0.5.RELEASE
+</code></pre>
+
+<p>Currently, there is no dependency check in artifact removal. So you should
+be careful when use this command.</p>
+
+<h3>
+<a id="clean" class="anchor" href="#clean" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clean</h3>
+
+<p><code>jip clean</code> will remove everything you downloaded, be careful to
+use it.</p>
+
+<h3>
+<a id="search" class="anchor" href="#search" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Search</h3>
+
+<p>You can also search maven central repository with a <code>jip search [keyword]</code>.
+The search service is provided by 
+<code>Sonatype's official Maven search &lt;http://search.maven.org&gt;</code>_ . </p>
+
+<h3>
+<a id="persist-current-environment-state" class="anchor" href="#persist-current-environment-state" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Persist current environment state</h3>
+
+<p>Before you distribute you environment, you can use <code>freeze</code> to persist 
+current state into a pom file.</p>
+
+<pre><code>jip freeze &gt; pom.xml
+</code></pre>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>You can configure custom maven repository with a dot file, jip will
+search configurations in the following order:</p>
+
+<ol>
+<li>
+<code>$VIRTUAL_ENV/.jip_config</code>, your virtual environment home</li>
+<li>
+<code>$HOME/.jip_config</code>, your home</li>
+</ol>
+
+<p>Here is an example:</p>
+
+<pre><code>[repos:jboss]
+uri=http://repository.jboss.org/maven2/
+type=remote
+
+[repos:local]
+uri=~/.m2/repository/
+type=local
+
+[repos:central]
+uri=http://repo1.maven.org/maven2/
+type=remote
+</code></pre>
+
+<p>Be careful that the <code>.jip_config</code> file will overwrite default settings,
+so you must include default local and central repository explicitly.
+jip will skip repositories once it finds package matches the maven
+coordinator.</p>
+
+<p>Artifacts will be cached at <code>$HOME/.jip</code> (<code>$VIRTUAL_ENV/.jip</code> if
+you are using a virtual environment).</p>
+
+<p>From 0.4, you can also define repositories in pom.xml if you use
+the <code>resolve</code> command. jip will add these custom repositories
+with highest priority.</p>
+
+<h3>
+<a id="distribution-helpers" class="anchor" href="#distribution-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Distribution helpers</h3>
+
+<p>From 0.4, you can use jip in your setup.py to simplify jython
+source package distribution. Create <code>pom.xml</code> in the same directory
+with setup.py. Fill it with your Java dependencies in standard way. 
+In this file, you can also define custom repositories. Here is
+an example:</p>
+
+<pre><code>&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
+
+    ...
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+            &lt;version&gt;1.6.1&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+            &lt;version&gt;1.6.1&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        ...
+
+    &lt;/dependencies&gt;
+
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;sonatype-oss-sonatype&lt;/id&gt;
+            &lt;url&gt;http://oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+&lt;/project&gt;
+</code></pre>
+
+<p>And in your setup.py, use the jip setup wrapper instead of the one
+provided by setuptools or distutils. You can add keyword argument 
+<code>pom</code> to specify a custom name of the pom file.</p>
+
+<pre><code>from jip.dist import setup
+</code></pre>
+
+<p>Other than the traditional pom configuration, jip also allows you to 
+describe dependencies in python. You can define a data structure in 
+your <code>setup.py</code> like:</p>
+
+<pre><code>requires_java = {
+    'dependencies':[
+        ## (groupdId, artifactId, version)
+        ('org.slf4j', 'slf4j-api', '1.6.1'),
+        ('org.slf4j', 'slf4j-log4j12', '1.6.1'),
+        ('info.sunng.soldat', 'soldat', '1.0-SNAPSHOT'),
+        ('org.apache.mina', 'mina-core', '2.0.2')
+    ],
+    'repositories':[
+        ('sonatype-oss-snapshot', 'http://oss.sonatype.org/content/repositories/snapshots/')
+    ]
+}
+</code></pre>
+
+<p>And pass it to jip setup as keyword argument <code>requires_java</code>. Once 
+jip found this argument, it won't try to load a pom file.</p>
+
+<pre><code>from jip.dist import setup
+setup(
+    ...
+    requires_java=requires_java,
+    ...)
+</code></pre>
+
+<p>Another <code>resolve</code> command was added to setuptools, you can use this 
+command to download all dependencies to library path</p>
+
+<pre><code>jython setup.py resolve
+</code></pre>
+
+<p>All dependencies will be installed when running</p>
+
+<pre><code>jython setup.py install
+</code></pre>
+
+<p>So with jip's <code>setup()</code> wrapper, <code>pip</code> will automatically install 
+what your package needs. You can publish your package to python
+cheese shop, and there is just one command for everything</p>
+
+<pre><code>pip install [your-package-name]
+</code></pre>
+
+<h3>
+<a id="embedded-dependency-helper" class="anchor" href="#embedded-dependency-helper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Embedded dependency helper</h3>
+
+<p><code>jip.embed</code> is available for both virtualenv and global installation.
+You can descirbe Java dependency in you code, then it will be 
+resolved on the fly.
+jip.embed is inspired by Groovy's <a href="https://github.com/Grab" class="user-mention">@Grab</a>.</p>
+
+<pre><code>from jip.embed import require
+
+require('commons-lang:commons-lang:2.6')
+from org.apache.commons.lang import StringUtils
+
+StringUtils.reverse('jip rocks')
+</code></pre>
+
+<h2>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contact</h2>
+
+<p>If you have any problem using jip, or feature request for jip,
+please feel free to fire an issue on
+<code>github issue tracker &lt;http://github.com/jiptool7/jip/issues/&gt;</code><em>. You can
+also follow <code>@Sunng &lt;http://twitter.com/Sunng/&gt;</code></em> on twitter.</p>
+
+<h2>
+<a id="change-notes" class="anchor" href="#change-notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change Notes</h2>
+
+<h3>
+<a id="09-2015-04-23" class="anchor" href="#09-2015-04-23" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.9 (2015-04-23)</h3>
+
+<ul>
+<li>Python 3 support</li>
+</ul>
+
+<h3>
+<a id="08-2014-03-31" class="anchor" href="#08-2014-03-31" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.8 (2014-03-31)</h3>
+
+<ul>
+<li>Windows support</li>
+</ul>
+
+<h3>
+<a id="07-2011-06-11" class="anchor" href="#07-2011-06-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.7 (2011-06-11)</h3>
+
+<ul>
+<li>All new jip.embed and global installation</li>
+<li>enhanced search</li>
+<li>dry-run option for <code>install</code>, <code>deps</code> and <code>resolve</code>
+</li>
+<li>exclusion for <code>install</code> command and jip.dist</li>
+<li>local maven repository is disabled by default</li>
+<li>improved dependency resolving speed<br>
+</li>
+<li>jip now maintains a local cache of jars and poms in <code>$HOME/.jip/cache/</code>
+</li>
+<li>use argparse for better command-line ui<br>
+</li>
+<li>add some test cases</li>
+</ul>
+
+<h3>
+<a id="051-2011-05-14" class="anchor" href="#051-2011-05-14" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.5.1 (2011-05-14)</h3>
+
+<ul>
+<li>Artifact jar package download in paralell</li>
+<li>User-agent header included in http request</li>
+<li>new command <code>freeze</code> to dump current state</li>
+<li>bugfix</li>
+</ul>
+
+<h3>
+<a id="04-2011-04-15" class="anchor" href="#04-2011-04-15" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.4 (2011-04-15)</h3>
+
+<ul>
+<li>New commands available: <code>search</code>, <code>deps</code>, <code>list</code>, <code>remove</code>
+</li>
+<li>New feature <code>jip.dist</code> for setuptools integration</li>
+<li>Dependency exclusion support, thanks <em>vvangelovski</em>
+</li>
+<li>Allow project-scoped repository defined in <code>pom.xml</code> and <code>setup.py</code>
+</li>
+<li>Code refactoring, now programming friendly</li>
+<li>README converted to reStructuredText</li>
+<li>Migrate to MIT License</li>
+</ul>
+
+<h3>
+<a id="021-2011-04-07" class="anchor" href="#021-2011-04-07" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.2.1 (2011-04-07)</h3>
+
+<ul>
+<li>Improved console output format</li>
+<li>Correct scope dependency management inheritance</li>
+<li>Alpha release of snapshot management, you can update a snapshot artifact</li>
+<li>Environment independent configuration. <code>.jip</code> for each environment</li>
+<li>Bug fixes</li>
+</ul>
+
+<h3>
+<a id="01-2011-01-04" class="anchor" href="#01-2011-01-04" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.1 (2011-01-04)</h3>
+
+<ul>
+<li>Initial release</li>
+</ul>
+
+<h2>
+<a id="links" class="anchor" href="#links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Links</h2>
+
+<ul>
+<li> <code>Don't repeat yourself: Distribute jython packages with jip.dist &lt;http://sunng.info/blog/2011/04/dont-repeat-yourself-distribute-jython-package-with-jip-dist/&gt;</code>_</li>
+<li> <strong>Obsolete</strong>
+<code>Introduction to jip 0.1 &lt;http://sunng.info/blog/jip-0-1/&gt;</code>_</li>
+<li> <code>Project on Github &lt;http://github.com/sunng87/jip&gt;</code>_</li>
+<li> <code>Package on Python Cheese Shop &lt;http://pypi.python.org/pypi/jip&gt;</code>_</li>
+</ul>
+
+      <footer class="site-footer">
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
