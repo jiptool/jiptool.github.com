@@ -261,6 +261,10 @@ also follow `@Sunng <http://twitter.com/Sunng/>`_ on twitter.
 
 ## Change Notes
 
+### 0.9.8 (2016-07-27)
+
+- Minor fixes
+
 ### 0.9 (2015-04-23)
 
 - Python 3 support
@@ -312,10 +316,9 @@ also follow `@Sunng <http://twitter.com/Sunng/>`_ on twitter.
 
 ## Links
 
--  `Don't repeat yourself: Distribute jython packages with jip.dist <http://sunng.info/blog/2011/04/dont-repeat-yourself-distribute-jython-package-with-jip-dist/>`_
--  **Obsolete**
-   `Introduction to jip 0.1 <http://sunng.info/blog/jip-0-1/>`_
--  `Project on Github <http://github.com/sunng87/jip>`_
--  `Package on Python Cheese Shop <http://pypi.python.org/pypi/jip>`_
+-  [Don't repeat yourself: Distribute jython packages with jip.dist](http://sunng.info/blog/2011/04/dont-repeat-yourself-distribute-jython-package-with-jip-dist/)
+-  (**obsolete**) [Introduction to jip 0.1](http://sunng.info/blog/jip-0-1/)
+-  [Project on Github](http://github.com/sunng87/jip)
+-  [Package on Python Cheese Shop](http://pypi.python.org/pypi/jip)
 
 
